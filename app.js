@@ -5,6 +5,7 @@ const TICKET_PRICE = 30;
 const PAGE_SIZE = 100;
 const COLLECTION_NAME = "rifa_los_brothers_boletos";
 const WHATSAPP_NUMBER = "524521300270";
+const CARD_NUMBER = "4152314260826980";
 
 const ticketsMap = new Map();
 const selectedSet = new Set();
@@ -359,13 +360,35 @@ nextPage.addEventListener("click", () => {
 });
 
 btnCopiarCuenta.addEventListener("click", async () => {
-  const datos = "BBVA · Titular: Misael Abrego Aguado · Terminación: 6980 · Rifas Los Brothers";
+  const numeroTarjeta = (btnCopiarCuenta.dataset.tarjeta || CARD_NUMBER).replace(/\D/g, "");
+  const textoOriginal = btnCopiarCuenta.textContent;
+
+  const mostrarCopiado = () => {
+    btnCopiarCuenta.textContent = "✅ ¡Tarjeta copiada!";
+    setTimeout(() => {
+      btnCopiarCuenta.textContent = textoOriginal;
+    }, 1800);
+  };
+
   try {
-    await navigator.clipboard.writeText(datos);
-    btnCopiarCuenta.textContent = "✅ ¡Copiado!";
-    setTimeout(() => (btnCopiarCuenta.textContent = "📋 Copiar datos"), 1800);
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(numeroTarjeta);
+      mostrarCopiado();
+      return;
+    }
+    throw new Error("Clipboard API no disponible");
   } catch {
-    alert(datos);
+    const inputTemporal = document.createElement("input");
+    inputTemporal.value = numeroTarjeta;
+    inputTemporal.setAttribute("readonly", "");
+    inputTemporal.style.position = "fixed";
+    inputTemporal.style.opacity = "0";
+    document.body.appendChild(inputTemporal);
+    inputTemporal.select();
+    inputTemporal.setSelectionRange(0, numeroTarjeta.length);
+    document.execCommand("copy");
+    document.body.removeChild(inputTemporal);
+    mostrarCopiado();
   }
 });
 
