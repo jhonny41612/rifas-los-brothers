@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Admin | Rifas Los Brothers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070709;
+      --surface: #111116;
+      --surface-2: #181820;
+      --border: rgba(255, 255, 255, 0.09);
+      --border-gold: rgba(250, 204, 21, 0.42);
+      --text: #f5f5f7;
+      --muted: #a1a1aa;
+      --gold: #eab308;
+      --gold-light: #facc15;
+      --red: #ef4444;
+      --amber: #f59e0b;
+      --green: #22c55e;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      background:
+        radial-gradient(ellipse 60% 40% at 85% 5%, rgba(220, 38, 38, 0.14), transparent 60%),
+        radial-gradient(ellipse 60% 40% at 15% 5%, rgba(234, 179, 8, 0.12), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 44px;
+    }
+
+    .container { width: min(1160px, 92%); margin: 0 auto; }
+    .hidden { display: none !important; }
+
+    header.topbar {
+      background: rgba(17, 17, 22, 0.92);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .brand-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.03em;
+      color: var(--gold-light);
+    }
+
+    .top-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+
+    .btn-gold {
+      padding: 9px 14px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: #09090b;
+      font-weight: 800;
+      font-size: 0.84rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-dark {
+      padding: 9px 13px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-amber {
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      background: rgba(245, 158, 11, 0.16);
+      color: #fde68a;
+      font-weight: 800;
+      font-size: 0.76rem;
+      cursor: pointer;
+    }
+
+    .btn-paid {
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(34, 197, 94, 0.45);
+      background: rgba(34, 197, 94, 0.16);
+      color: #bbf7d0;
+      font-weight: 800;
+      font-size: 0.76rem;
+      cursor: pointer;
+    }
+
+    .btn-free {
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      background: rgba(239, 68, 68, 0.16);
+      color: #fecaca;
+      font-weight: 800;
+      font-size: 0.76rem;
+      cursor: pointer;
+    }
+
+    .alert-banner {
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      background: rgba(245, 158, 11, 0.16);
+      border: 1px solid rgba(245, 158, 11, 0.55);
+      color: #fde68a;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .login-wrap {
+      max-width: 410px;
+      margin: 48px auto;
+      background: var(--surface);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+    }
+
+    .login-wrap h1 { font-size: 1.35rem; margin-bottom: 6px; }
+    .login-wrap p { font-size: 0.84rem; color: var(--muted); margin-bottom: 16px; }
+
+    .form-grid { display: grid; gap: 12px; }
+    label { display: grid; gap: 5px; font-size: 0.8rem; font-weight: 700; }
+
+    input, select {
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+
+    .error-msg { color: #fca5a5; font-size: 0.82rem; min-height: 18px; }
+
+    .dashboard { padding-top: 16px; }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .metric-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+    }
+
+    .metric-box span { font-size: 0.72rem; color: var(--muted); font-weight: 700; display: block; }
+    .metric-box strong { font-size: 1.35rem; color: var(--gold-light); }
+
+    .admin-tools-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .panel-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+    }
+
+    .panel-box h2 {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--gold-light);
+      margin-bottom: 4px;
+    }
+
+    .panel-box p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .manual-assign-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .manual-assign-form .full-span {
+      grid-column: 1 / -1;
+    }
+
+    .quick-unlock-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .status-note {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      min-height: 18px;
+    }
+
+    .toolbar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .filter-group { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .filter-btn {
+      padding: 7px 11px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+
+    .filter-btn.active {
+      border-color: var(--gold-light);
+      color: var(--gold-light);
+      background: rgba(250, 204, 21, 0.14);
+    }
+
+    .table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow-x: auto;
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
+    th { background: var(--surface-2); color: var(--muted); font-size: 0.74rem; text-transform: uppercase; }
+
+    .row-alert { background: rgba(245, 158, 11, 0.08); }
+
+    .badge {
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      display: inline-block;
+    }
+
+    .badge-apartado { background: rgba(245, 158, 11, 0.2); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.45); }
+    .badge-pagado { background: rgba(239, 68, 68, 0.2); color: #fecaca; border: 1px solid rgba(239, 68, 68, 0.45); }
+    .badge-disponible { background: rgba(161, 161, 170, 0.15); color: #d4d4d8; }
+
+    .row-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .wa-link {
+      padding: 6px 9px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+      text-decoration: none;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+
+    @media (max-width: 820px) {
+      .admin-tools-grid {
+        grid-template-columns: 1fr;
+      }
+      .manual-assign-form {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand-title">RIFAS LOS BROTHERS · PANEL ADMIN</div>
+      <div class="top-actions">
+        <button type="button" id="btnSoundToggle" class="btn-dark hidden">🔔 Sonido: ON</button>
+        <a href="index.html" class="btn-dark">← Ver sitio público</a>
+        <button type="button" id="btnLogout" class="btn-dark hidden">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="loginSection" class="login-wrap">
+      <h1>Acceso administrativo</h1>
+      <p>Inicia sesión con tu cuenta registrada en Firebase Authentication.</p>
+
+      <form id="loginForm" class="form-grid">
+        <label>
+          Correo de administrador
+          <input type="email" id="loginEmail" required placeholder="admin@rifaslosbrothers.com" />
+        </label>
+        <label>
+          Contraseña
+          <input type="password" id="loginPassword" required placeholder="Tu contraseña" />
+        </label>
+        <div id="loginError" class="error-msg"></div>
+        <button type="submit" id="btnLogin" class="btn-gold">Entrar al panel</button>
+      </form>
+    </section>
+
+    <section id="adminDashboard" class="dashboard hidden">
+      <div id="alertBanner" class="alert-banner hidden">
+        <span id="alertBannerText">🔔 Tienes boletos apartados pendientes de revisar comprobante.</span>
+        <button type="button" id="btnVerPendientes" class="btn-gold" style="padding:6px 12px;font-size:0.78rem;">Ver pendientes</button>
+      </div>
+
+      <div class="metrics" style="margin-top:14px;">
+        <div class="metric-box"><span>ALERTAS (APARTADOS)</span><strong id="mApartados">0</strong></div>
+        <div class="metric-box"><span>PAGADOS CONFIRMADOS</span><strong id="mPagados">0</strong></div>
+        <div class="metric-box"><span>RECAUDADO PAGADO</span><strong id="mRecaudado">$0</strong></div>
+        <div class="metric-box"><span>DISPONIBLES</span><strong id="mLibres">2,001</strong></div>
+      </div>
+
+      <div class="admin-tools-grid">
+        <div class="panel-box">
+          <h2>🎟️ Apartar o asignar boleto manualmente</h2>
+          <p>Escribe uno o varios folios separados por coma (ej. <code>3015</code> o <code>3015, 3016</code>) entre 3000 y 5000.</p>
+
+          <form id="manualAssignForm" class="manual-assign-form">
+            <input type="text" id="manualFolios" required placeholder="Folios (ej. 3015, 3016)" />
+            <select id="manualEstado">
+              <option value="apartado">Marcar como APARTADO</option>
+              <option value="pagado">Marcar como PAGADO</option>
+            </select>
+            <input type="text" id="manualNombre" required placeholder="Nombre del participante" />
+            <input type="tel" id="manualTelefono" placeholder="WhatsApp (opcional)" />
+            <input type="text" id="manualCiudad" class="full-span" placeholder="Ciudad / Estado (opcional)" />
+            <button type="submit" id="btnManualAssign" class="btn-gold full-span">Guardar boleto(s)</button>
+          </form>
+          <div id="manualFeedback" class="status-note"></div>
+        </div>
+
+        <div class="panel-box">
+          <h2>🔓 Desbloquear / Liberar folio</h2>
+          <p>Si un apartado quedó mal o no pagaron, escribe el número de boleto para dejarlo libre otra vez.</p>
+
+          <form id="quickUnlockForm" class="quick-unlock-row">
+            <input type="number" id="unlockFolioInput" min="3000" max="5000" required placeholder="Folio (3000-5000)" style="flex:1;" />
+            <button type="submit" class="btn-free" style="padding:10px 14px;font-size:0.82rem;">Liberar</button>
+          </form>
+          <div id="unlockFeedback" class="status-note"></div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <input type="text" id="searchInput" placeholder="Buscar por folio (3000-5000), nombre, tel o ciudad..." style="min-width: 250px; flex: 1;" />
+
+        <div class="filter-group">
+          <button type="button" class="filter-btn active" data-filter="activos">Apartados y Pagados</button>
+          <button type="button" class="filter-btn" data-filter="apartado">Pendientes Comprobante</button>
+          <button type="button" class="filter-btn" data-filter="pagado">Pagados</button>
+          <button type="button" class="filter-btn" data-filter="todos">Todos (3000-5000)</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Folio</th>
+              <th>Estado</th>
+              <th>Participante</th>
+              <th>WhatsApp</th>
+              <th>Ciudad</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="adminTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script>
+    const MIN_T = 3000;
+    const MAX_T = 5000;
+    const TOTAL_T = MAX_T - MIN_T + 1;
+    const PRICE_T = 30;
+    const COL_NAME = "rifa_los_brothers_boletos";
+
+    const loginSection = document.getElementById("loginSection");
+    const adminDashboard = document.getElementById("adminDashboard");
+    const loginForm = document.getElementById("loginForm");
+    const loginError = document.getElementById("loginError");
+    const btnLogin = document.getElementById("btnLogin");
+    const btnLogout = document.getElementById("btnLogout");
+    const btnSoundToggle = document.getElementById("btnSoundToggle");
+    const alertBanner = document.getElementById("alertBanner");
+    const alertBannerText = document.getElementById("alertBannerText");
+    const btnVerPendientes = document.getElementById("btnVerPendientes");
+    const searchInput = document.getElementById("searchInput");
+    const adminTableBody = document.getElementById("adminTableBody");
+
+    const manualAssignForm = document.getElementById("manualAssignForm");
+    const btnManualAssign = document.getElementById("btnManualAssign");
+    const manualFeedback = document.getElementById("manualFeedback");
+    const quickUnlockForm = document.getElementById("quickUnlockForm");
+    const unlockFolioInput = document.getElementById("unlockFolioInput");
+    const unlockFeedback = document.getElementById("unlockFeedback");
+
+    const mApartados = document.getElementById("mApartados");
+    const mPagados = document.getElementById("mPagados");
+    const mRecaudado = document.getElementById("mRecaudado");
+    const mLibres = document.getElementById("mLibres");
+
+    let ticketsData = new Map();
+    let currentFilter = "activos";
+    let unsubscribeSnapshot = null;
+    let knownApartados = new Set();
+    let isFirstSnapshot = true;
+    let soundEnabled = true;
+
+    function playAlertBeep() {
+      if (!soundEnabled) return;
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        gain.gain.setValueAtTime(0.08, ctx.currentTime);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.18);
+      } catch {}
+    }
+
+    function resetTicketsMap() {
+      ticketsData = new Map();
+      for (let n = MIN_T; n <= MAX_T; n++) {
+        ticketsData.set(n, { numero: n, estado: "disponible", nombre: "", telefono: "", ciudad: "" });
+      }
+    }
+
+    function updateMetrics() {
+      let ap = 0;
+      let pa = 0;
+      const apartadosList = [];
+
+      for (let n = MIN_T; n <= MAX_T; n++) {
+        const st = ticketsData.get(n)?.estado;
+        if (st === "apartado") {
+          ap++;
+          apartadosList.push(`#${n}`);
+        } else if (st === "pagado") {
+          pa++;
+        }
+      }
+
+      const li = TOTAL_T - ap - pa;
+      mApartados.textContent = ap.toLocaleString("es-MX");
+      mPagados.textContent = pa.toLocaleString("es-MX");
+      mRecaudado.textContent = `$${(pa * PRICE_T).toLocaleString("es-MX")} MXN`;
+      mLibres.textContent = li.toLocaleString("es-MX");
+
+      if (ap > 0) {
+        alertBanner.classList.remove("hidden");
+        alertBannerText.textContent = `🔔 ${ap} boleto(s) apartado(s) por revisar comprobante: ${apartadosList.slice(0, 8).join(", ")}${apartadosList.length > 8 ? "..." : ""}`;
+      } else {
+        alertBanner.classList.add("hidden");
+      }
+    }
+
+    async function setTicketStatus(numero, nuevoEstado) {
+      try {
+        const ref = db.collection(COL_NAME).doc(String(numero));
+        if (nuevoEstado === "disponible") {
+          await ref.set(
+            {
+              numero: Number(numero),
+              precio: PRICE_T,
+              estado: "disponible",
+              revisionComprobante: false,
+              nombre: "",
+              telefono: "",
+              ciudad: "",
+              liberadoEn: firebase.firestore.FieldValue.serverTimestamp()
+            },
+            { merge: true }
+          );
+        } else {
+          await ref.set(
+            {
+              numero: Number(numero),
+              precio: PRICE_T,
+              estado: nuevoEstado,
+              revisionComprobante: nuevoEstado === "apartado",
+              pagadoEn: nuevoEstado === "pagado" ? firebase.firestore.FieldValue.serverTimestamp() : null
+            },
+            { merge: true }
+          );
+        }
+      } catch (err) {
+        console.error("Error actualizando boleto:", err);
+        alert("No se pudo actualizar el boleto. Revisa tu sesión y reglas de Firestore.");
+      }
+    }
+
+    function parseFoliosInput(rawText) {
+      const tokens = rawText.split(/[\s,;]+/).map((s) => s.trim()).filter(Boolean);
+      const numbers = [];
+      for (const tok of tokens) {
+        const num = Number(tok);
+        if (!Number.isInteger(num) || num < MIN_T || num > MAX_T) {
+          return { error: `El folio "${tok}" no está entre ${MIN_T} y ${MAX_T}.` };
+        }
+        if (!numbers.includes(num)) numbers.push(num);
+      }
+      if (numbers.length === 0) return { error: "Escribe al menos un folio válido." };
+      return { numbers };
+    }
+
+    manualAssignForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      manualFeedback.textContent = "";
+
+      const parsed = parseFoliosInput(document.getElementById("manualFolios").value);
+      if (parsed.error) {
+        manualFeedback.innerHTML = `<span style="color:#fca5a5;">${parsed.error}</span>`;
+        return;
+      }
+
+      const estado = document.getElementById("manualEstado").value;
+      const nombre = document.getElementById("manualNombre").value.trim();
+      const telefono = document.getElementById("manualTelefono").value.trim();
+      const ciudad = document.getElementById("manualCiudad").value.trim();
+
+      btnManualAssign.disabled = true;
+      btnManualAssign.textContent = "Guardando...";
+
+      try {
+        const batch = db.batch();
+        const now = firebase.firestore.FieldValue.serverTimestamp();
+
+        parsed.numbers.forEach((num) => {
+          const ref = db.collection(COL_NAME).doc(String(num));
+          batch.set(
+            ref,
+            {
+              numero: Number(num),
+              precio: PRICE_T,
+              estado,
+              revisionComprobante: estado === "apartado",
+              nombre,
+              telefono,
+              ciudad,
+              apartadoEn: now
+            },
+            { merge: true }
+          );
+        });
+
+        await batch.commit();
+        manualFeedback.innerHTML = `<span style="color:#bbf7d0;">✅ Folio(s) ${parsed.numbers.map((n) => `#${n}`).join(", ")} guardados como ${estado.toUpperCase()}.</span>`;
+        manualAssignForm.reset();
+      } catch (err) {
+        console.error("Error en apartado manual:", err);
+        manualFeedback.innerHTML = `<span style="color:#fca5a5;">Error al guardar en Firestore.</span>`;
+      } finally {
+        btnManualAssign.disabled = false;
+        btnManualAssign.textContent = "Guardar boleto(s)";
+      }
+    });
+
+    quickUnlockForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      unlockFeedback.textContent = "";
+      const num = Number(unlockFolioInput.value);
+      if (!Number.isInteger(num) || num < MIN_T || num > MAX_T) {
+        unlockFeedback.innerHTML = `<span style="color:#fca5a5;">Ingresa un folio entre ${MIN_T} y ${MAX_T}.</span>`;
+        return;
+      }
+
+      await setTicketStatus(num, "disponible");
+      unlockFeedback.innerHTML = `<span style="color:#bbf7d0;">🔓 Boleto #${num} desbloqueado y disponible nuevamente.</span>`;
+      unlockFolioInput.value = "";
+    });
+
+    function renderTable() {
+      const q = searchInput.value.trim().toLowerCase();
+      const rows = [];
+
+      for (let n = MIN_T; n <= MAX_T; n++) {
+        const item = ticketsData.get(n);
+        if (currentFilter === "activos" && item.estado === "disponible") continue;
+        if (currentFilter === "apartado" && item.estado !== "apartado") continue;
+        if (currentFilter === "pagado" && item.estado !== "pagado") continue;
+
+        if (q) {
+          const hayMatch =
+            String(item.numero).includes(q) ||
+            (item.nombre || "").toLowerCase().includes(q) ||
+            (item.telefono || "").toLowerCase().includes(q) ||
+            (item.ciudad || "").toLowerCase().includes(q);
+          if (!hayMatch) continue;
+        }
+
+        rows.push(item);
+      }
+
+      if (rows.length === 0) {
+        adminTableBody.innerHTML = `<tr><td colspan="6" style="color:var(--muted);">No hay boletos que coincidan con el filtro.</td></tr>`;
+        return;
+      }
+
+      const limited = rows.slice(0, 250);
+      adminTableBody.innerHTML = limited
+        .map((t) => {
+          const badgeClass =
+            t.estado === "pagado"
+              ? "badge-pagado"
+              : t.estado === "apartado"
+              ? "badge-apartado"
+              : "badge-disponible";
+
+          const estadoLabel =
+            t.estado === "apartado"
+              ? "ALERTA · REVISAR COMPROBANTE"
+              : t.estado === "pagado"
+              ? "PAGADO CONFIRMADO"
+              : "DISPONIBLE";
+
+          const cleanPhone = (t.telefono || "").replace(/\D/g, "");
+          const waHref = cleanPhone
+            ? `https://wa.me/52${cleanPhone.slice(-10)}?text=${encodeURIComponent(
+                `Hola ${t.nombre || ""}, te contactamos de Rifas Los Brothers por tu boleto #${t.numero}.`
+              )}`
+            : "";
+
+          return `
+            <tr class="${t.estado === "apartado" ? "row-alert" : ""}">
+              <td><strong>#${t.numero}</strong></td>
+              <td><span class="badge ${badgeClass}">${estadoLabel}</span></td>
+              <td>${t.nombre || "—"}</td>
+              <td>${t.telefono || "—"}</td>
+              <td>${t.ciudad || "—"}</td>
+              <td>
+                <div class="row-actions">
+                  ${t.estado !== "pagado" ? `<button type="button" class="btn-paid" onclick="setTicketStatus(${t.numero}, 'pagado')">Aceptar y Marcar Pagado</button>` : ""}
+                  ${t.estado === "disponible" ? `<button type="button" class="btn-amber" onclick="setTicketStatus(${t.numero}, 'apartado')">Apartar</button>` : ""}
+                  ${t.estado !== "disponible" ? `<button type="button" class="btn-free" onclick="setTicketStatus(${t.numero}, 'disponible')">Liberar</button>` : ""}
+                  ${waHref ? `<a href="${waHref}" target="_blank" rel="noopener" class="wa-link">WhatsApp</a>` : ""}
+                </div>
+              </td>
+            </tr>
+          `;
+        })
+        .join("");
+    }
+
+    function startListeningTickets() {
+      if (unsubscribeSnapshot) unsubscribeSnapshot();
+      resetTicketsMap();
+      knownApartados = new Set();
+      isFirstSnapshot = true;
+      updateMetrics();
+      renderTable();
+
+      unsubscribeSnapshot = db.collection(COL_NAME).onSnapshot(
+        (snap) => {
+          resetTicketsMap();
+          const currentApartados = new Set();
+          const newlyAdded = [];
+
+          snap.forEach((doc) => {
+            const d = doc.data();
+            const num = Number(d.numero ?? doc.id);
+            if (num >= MIN_T && num <= MAX_T) {
+              const estado = d.estado || "disponible";
+              ticketsData.set(num, {
+                numero: num,
+                estado,
+                nombre: d.nombre || "",
+                telefono: d.telefono || "",
+                ciudad: d.ciudad || ""
+              });
+
+              if (estado === "apartado") {
+                currentApartados.add(num);
+                if (!isFirstSnapshot && !knownApartados.has(num)) {
+                  newlyAdded.push(`#${num}`);
+                }
+              }
+            }
+          });
+
+          knownApartados = currentApartados;
+          isFirstSnapshot = false;
+
+          if (newlyAdded.length > 0) {
+            playAlertBeep();
+            alertBannerText.textContent = `🚨 ¡Nuevo apartado! Revisa comprobante del folio ${newlyAdded.join(", ")}.`;
+          }
+
+          updateMetrics();
+          renderTable();
+        },
+        (err) => {
+          console.error("Error leyendo Firestore:", err);
+        }
+      );
+    }
+
+    btnSoundToggle.addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+      btnSoundToggle.textContent = soundEnabled ? "🔔 Sonido: ON" : "🔕 Sonido: OFF";
+    });
+
+    btnVerPendientes.addEventListener("click", () => {
+      currentFilter = "apartado";
+      document.querySelectorAll(".filter-btn").forEach((b) => {
+        b.classList.toggle("active", b.dataset.filter === "apartado");
+      });
+      renderTable();
+    });
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      loginError.textContent = "";
+      btnLogin.disabled = true;
+      btnLogin.textContent = "Verificando...";
+
+      const email = document.getElementById("loginEmail").value.trim();
+      const pass = document.getElementById("loginPassword").value;
+
+      try {
+        await auth.signInWithEmailAndPassword(email, pass);
+      } catch (err) {
+        console.error(err);
+        loginError.textContent = "Correo o contraseña incorrectos.";
+      } finally {
+        btnLogin.disabled = false;
+        btnLogin.textContent = "Entrar al panel";
+      }
+    });
+
+    btnLogout.addEventListener("click", async () => {
+      if (unsubscribeSnapshot) {
+        unsubscribeSnapshot();
+        unsubscribeSnapshot = null;
+      }
+      await auth.signOut();
+    });
+
+    document.querySelectorAll(".filter-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentFilter = btn.dataset.filter;
+        renderTable();
+      });
+    });
+
+    searchInput.addEventListener("input", renderTable);
+
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        loginSection.classList.add("hidden");
+        adminDashboard.classList.remove("hidden");
+        btnLogout.classList.remove("hidden");
+        btnSoundToggle.classList.remove("hidden");
+        startListeningTickets();
+      } else {
+        loginSection.classList.remove("hidden");
+        adminDashboard.classList.add("hidden");
+        btnLogout.classList.add("hidden");
+        btnSoundToggle.classList.add("hidden");
+      }
+    });
+  </script>
+</body>
+</html>

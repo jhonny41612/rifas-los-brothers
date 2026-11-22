@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rifas Los Brothers | Sorteo Morbidelli NZ250 2027</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="top-ticker">
+    <div class="container ticker-inner">
+      <span>🔥 GRAN RIFA OFICIAL · 1° MORBIDELLI NZ250 2027 · 2° $6,000 MXN · 3° $3,000 MXN · BOLETO $30 MXN 🔥</span>
+    </div>
+  </div>
+
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <div class="brand-logo-wrap">
+          <img src="img/logo.jpg" data-candidates="img/logo.jpg,img/logo.jpeg,img/logo.png,img/logo.webp,img/logo.jpg/logo.jpg,img/logo.jpg/logo.jpeg,img/logo.jpg/logo.png,img/logo.jpg/logo" alt="Logo Rifas Los Brothers" class="brand-img" />
+        </div>
+        <div>
+          <span class="brand-title">RIFAS LOS BROTHERS</span>
+          <span class="brand-tag">SORTEO #01 · FOLIOS 3000 AL 5000</span>
+        </div>
+      </a>
+
+      <nav class="menu">
+        <a href="#premios">Premios</a>
+        <a href="#verificador">Verificar Boleto</a>
+        <a href="#boletos">Lista de Boletos</a>
+        <a href="#cuentas">Cuentas de Pago</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-layout">
+      <div class="hero-left">
+        <div class="event-chip">
+          <span class="live-dot"></span> EVENTO ACTIVO · 2,001 BOLETOS EN JUEGO
+        </div>
+
+        <h1>GANA UNA <span>MORBIDELLI NZ250 2027</span> POR SOLO $30 PESOS</h1>
+
+        <p class="hero-lead">
+          Elige tus folios en nuestra lista en tiempo real o prueba la <strong>Maquinita de la Suerte</strong>.
+          Tienes <strong>24 horas</strong> para enviar tu comprobante y asegurar tu lugar.
+        </p>
+
+        <div class="hero-cta">
+          <a href="#boletos" class="btn-gold">🎟️ Elegir mis boletos</a>
+          <button type="button" id="btnAbrirVerificador" class="btn-outline">🔍 Verificar mi boleto</button>
+        </div>
+
+        <div class="live-progress">
+          <div class="progress-header">
+            <span>BOLETOS VENDIDOS Y APARTADOS</span>
+            <strong id="porcentajeAvance">0%</strong>
+          </div>
+          <div class="progress-bar-bg">
+            <div id="barraAvance" class="progress-bar-fill" style="width: 0%;"></div>
+          </div>
+          <div class="stats-row">
+            <div><strong id="countLibres">2,001</strong><span>Libres</span></div>
+            <div><strong id="countApartados">0</strong><span>Apartados</span></div>
+            <div><strong id="countPagados">0</strong><span>Pagados</span></div>
+            <div><strong>$30</strong><span>MXN c/u</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right" id="premios">
+        <div class="main-prize-card">
+          <div class="prize-top-row">
+            <div class="prize-ribbon">1ER LUGAR · PREMIO MAYOR</div>
+            <div class="brand-crest">
+              <img src="img/logo.jpg" data-candidates="img/logo.jpg,img/logo.jpeg,img/logo.png,img/logo.webp,img/logo.jpg/logo.jpg,img/logo.jpg/logo.jpeg,img/logo.jpg/logo.png,img/logo.jpg/logo" alt="Rifas Los Brothers" class="crest-thumb" />
+              <span>LOS BROTHERS</span>
+            </div>
+          </div>
+
+          <div class="moto-carousel" aria-label="Galería de la motocicleta">
+            <div class="carousel-viewport">
+              <div class="carousel-track" id="carouselTrack">
+                <figure class="carousel-slide">
+                  <img src="img/moto.jpg/moto 1.jpg" data-candidates="img/moto.jpg/moto 1.jpg,img/moto.jpg/moto 1.jpeg,img/moto.jpg/moto 1.png,img/moto.jpg/moto 1.webp,img/moto.jpg/moto 1" alt="Morbidelli NZ250 2027 foto 1" />
+                  <figcaption>Morbidelli NZ250 2027 · Vista 1</figcaption>
+                </figure>
+                <figure class="carousel-slide">
+                  <img src="img/moto.jpg/moto2.jpg" data-candidates="img/moto.jpg/moto2.jpg,img/moto.jpg/moto2.jpeg,img/moto.jpg/moto2.png,img/moto.jpg/moto2.webp,img/moto.jpg/moto2" alt="Morbidelli NZ250 2027 foto 2" />
+                  <figcaption>Morbidelli NZ250 2027 · Vista 2</figcaption>
+                </figure>
+                <figure class="carousel-slide">
+                  <img src="img/moto.jpg/moto3.jpg" data-candidates="img/moto.jpg/moto3.jpg,img/moto.jpg/moto3.jpeg,img/moto.jpg/moto3.png,img/moto.jpg/moto3.webp,img/moto.jpg/moto3" alt="Morbidelli NZ250 2027 foto 3" />
+                  <figcaption>Morbidelli NZ250 2027 · Vista 3</figcaption>
+                </figure>
+                <figure class="carousel-slide">
+                  <img src="img/moto.jpg/moto4.jpg" data-candidates="img/moto.jpg/moto4.jpg,img/moto.jpg/moto4.jpeg,img/moto.jpg/moto4.png,img/moto.jpg/moto4.webp,img/moto.jpg/moto4" alt="Morbidelli NZ250 2027 foto 4" />
+                  <figcaption>Morbidelli NZ250 2027 · Vista 4</figcaption>
+                </figure>
+                <figure class="carousel-slide">
+                  <img src="img/moto.jpg/moto5.jpg" data-candidates="img/moto.jpg/moto5.jpg,img/moto.jpg/moto5.jpeg,img/moto.jpg/moto5.png,img/moto.jpg/moto5.webp,img/moto.jpg/moto5" alt="Morbidelli NZ250 2027 foto 5" />
+                  <figcaption>Morbidelli NZ250 2027 · Vista 5</figcaption>
+                </figure>
+              </div>
+
+              <button type="button" id="prevSlide" class="carousel-arrow prev" aria-label="Foto anterior">‹</button>
+              <button type="button" id="nextSlide" class="carousel-arrow next" aria-label="Foto siguiente">›</button>
+            </div>
+
+            <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Seleccionar foto"></div>
+          </div>
+
+          <div class="extra-prizes-grid">
+            <div class="sub-prize">
+              <span class="sub-place">🥈 2DO LUGAR</span>
+              <strong>$6,000 MXN</strong>
+              <small>En efectivo</small>
+            </div>
+            <div class="sub-prize">
+              <span class="sub-place">🥉 3ER LUGAR</span>
+              <strong>$3,000 MXN</strong>
+              <small>En efectivo</small>
+            </div>
+          </div>
+
+          <div class="garantia-box">
+            ⏱️ <strong>Regla de apartado:</strong> Todo boleto apartado cuenta con <strong>24 horas</strong> para liquidarse antes de volver a liberarse.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="verificador" class="verifier-section">
+    <div class="container">
+      <div class="verifier-card">
+        <div>
+          <span class="mini-label">CONSULTA INSTANTÁNEA</span>
+          <h3>Verificador oficial de boletos</h3>
+          <p>Escribe cualquier folio entre <strong>3000</strong> y <strong>5000</strong> para revisar su estatus en vivo.</p>
+        </div>
+
+        <form id="formVerificador" class="verifier-form">
+          <input type="number" id="inputVerificar" min="3000" max="5000" placeholder="Ej. 3450" required />
+          <button type="submit" class="btn-gold">Consultar</button>
+        </form>
+
+        <div id="resultadoVerificador" class="verifier-result" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <main id="boletos" class="container board-section">
+    <div class="board-header">
+      <div>
+        <span class="mini-label">TABLERO EN TIEMPO REAL</span>
+        <h2>Selecciona tus números de la suerte</h2>
+      </div>
+
+      <div class="status-legend">
+        <span><i class="swatch free"></i> Disponible</span>
+        <span><i class="swatch selected"></i> Seleccionado</span>
+        <span><i class="swatch reserved"></i> Apartado (24h)</span>
+        <span><i class="swatch paid"></i> Pagado</span>
+      </div>
+    </div>
+
+    <div class="lucky-machine">
+      <div class="machine-info">
+        <strong>🎰 Maquinita de la Suerte</strong>
+        <span>Genera combinaciones libres al azar con un toque</span>
+      </div>
+      <div class="machine-buttons">
+        <button type="button" class="luck-btn" data-qty="1">1 Boleto ($30)</button>
+        <button type="button" class="luck-btn" data-qty="3">3 Boletos ($90)</button>
+        <button type="button" class="luck-btn" data-qty="5">5 Boletos ($150)</button>
+        <button type="button" class="luck-btn" data-qty="10">10 Boletos ($300)</button>
+      </div>
+    </div>
+
+    <div class="controls-bar">
+      <div class="search-wrap">
+        <input type="number" id="filtroNumero" min="3000" max="5000" placeholder="Ir al número (3000 - 5000)..." />
+        <button type="button" id="btnResetNumero" class="btn-dark">Ver todos</button>
+      </div>
+
+      <div class="tabs-filter">
+        <button type="button" class="tab-btn active" data-state="todos">Todos (2,001)</button>
+        <button type="button" class="tab-btn" data-state="disponible">Disponibles</button>
+        <button type="button" class="tab-btn" data-state="apartado">Apartados</button>
+        <button type="button" class="tab-btn" data-state="pagado">Pagados</button>
+      </div>
+    </div>
+
+    <div id="boletosGrid" class="tickets-matrix"></div>
+
+    <div class="pager">
+      <button type="button" id="prevPage" class="btn-dark">← Anterior</button>
+      <span id="pagerLabel">Página 1</span>
+      <button type="button" id="nextPage" class="btn-dark">Siguiente →</button>
+    </div>
+  </main>
+
+  <section id="cuentas" class="container payment-section">
+    <div class="payment-grid">
+      <div class="bank-card">
+        <div class="bank-top">
+          <span class="bank-name">BBVA MÉXICO</span>
+          <button type="button" id="btnCopiarCuenta" class="btn-copy">📋 Copiar datos</button>
+        </div>
+        <p class="bank-holder">Titular: <strong>Misael Abrego Aguado</strong></p>
+        <p class="bank-number">Tarjeta terminación: <strong>•••• •••• •••• 6980</strong></p>
+        <p class="bank-note">Transferencia SPEI o depósito en practicaja BBVA / OXXO.</p>
+      </div>
+
+      <div class="whatsapp-card">
+        <span class="mini-label">ATENCIÓN DIRECTA</span>
+        <h3>¿Ya realizaste tu pago?</h3>
+        <p>Envía tu comprobante de transferencia o ticket de depósito con tu nombre y números apartados al WhatsApp oficial.</p>
+        <a href="https://wa.me/524521300270?text=Hola%20Rifas%20Los%20Brothers%2C%20env%C3%ADo%20mi%20comprobante%20de%20pago." target="_blank" rel="noopener" class="btn-gold">
+          📲 Enviar comprobante al 452 130 0270
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div id="floatingCart" class="floating-cart hidden">
+    <div class="container cart-inner">
+      <div class="cart-summary">
+        <strong id="cartCountText">0 boletos seleccionados</strong>
+        <span id="cartNumbersPreview"></span>
+      </div>
+      <div class="cart-actions">
+        <span class="cart-total" id="cartTotalText">$0 MXN</span>
+        <button type="button" id="btnVaciarCarrito" class="btn-dark">Limpiar</button>
+        <button type="button" id="btnAbrirModal" class="btn-gold">Apartar ahora →</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalApartado" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      <div class="modal-head">
+        <div>
+          <span class="mini-label">APARTADO POR 24 HORAS</span>
+          <h3 id="modalTitle">Completa tus datos</h3>
+        </div>
+        <button type="button" id="btnCerrarModal" class="close-x" aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="modal-tickets-box">
+        <div class="modal-row">
+          <span>Boletos elegidos:</span>
+          <strong id="modalCount">0</strong>
+        </div>
+        <div id="modalChips" class="modal-chips"></div>
+        <div class="modal-row total">
+          <span>Total a depositar:</span>
+          <strong id="modalTotal">$0 MXN</strong>
+        </div>
+      </div>
+
+      <form id="formConfirmarApartado" class="modal-form">
+        <label>
+          Nombre y apellidos
+          <input type="text" id="inputNombre" required placeholder="Ej. Juan Carlos Pérez" />
+        </label>
+
+        <label>
+          Número de WhatsApp (10 dígitos)
+          <input type="tel" id="inputTelefono" required placeholder="Ej. 4521234567" />
+        </label>
+
+        <label>
+          Ciudad / Estado
+          <input type="text" id="inputCiudad" required placeholder="Ej. Uruapan, Michoacán" />
+        </label>
+
+        <div id="modalFeedback" class="feedback-box"></div>
+
+        <button type="submit" id="btnConfirmarEnvio" class="btn-gold btn-block">
+          Confirmar apartado y abrir WhatsApp
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-flex">
+      <div class="footer-brand">
+        <img src="img/logo.jpg" data-candidates="img/logo.jpg,img/logo.jpeg,img/logo.png,img/logo.webp,img/logo.jpg/logo.jpg,img/logo.jpg/logo.jpeg,img/logo.jpg/logo.png,img/logo.jpg/logo" alt="Rifas Los Brothers" class="footer-logo" />
+        <span>© 2026 <strong>Rifas Los Brothers</strong> · Todos los derechos reservados.</span>
+      </div>
+      <a href="https://wa.me/524521300270" target="_blank" rel="noopener">WhatsApp: 452 130 0270</a>
+    </div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
